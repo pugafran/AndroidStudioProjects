@@ -73,4 +73,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <TextView
+        android:id="@+id/labelCarbohidratos"
+        android:layout_width="274dp"
+        android:layout_height="28dp"
+        android:text="Carbohidratos totales: "
+        app:layout_constraintTop_toBottomOf="@+id/labelPrueba"
+        tools:layout_editor_absoluteX="59dp" />
+
+    <TextView
+        android:id="@+id/labelIndiceGlucemico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Índice glucémico medio: "
+        app:layout_constraintTop_toBottomOf="@+id/labelCarbohidratos"
+        tools:layout_editor_absoluteX="59dp" />
+
+    <Button
+        android:id="@+id/buttonCalcular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:text="Calcular"
+        app:cornerRadius="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBarras" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,12 +6,16 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class AlimentosVM() : Parcelable {
+class AlimentosVM() : ViewModel(){
     data class Alimento(
         val nombre: String,
         val carbohidratos: Double,
         val indiceGlucemico: Int
     )
+
+    var totalCarbohidratos = 0.0;
+    var totalIndiceGlucemicoPonderado = 0.0;
+    var totalCarbohidratosPonderados = 0.0;
 
     val jsonStr = """{
     "Altramuz": {"carbohidratos": 20, "indiceGlucemico": 15},
@@ -209,22 +213,6 @@ class AlimentosVM() : Parcelable {
         }
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
 
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<AlimentosVM> {
-        override fun createFromParcel(parcel: Parcel): AlimentosVM {
-            return AlimentosVM(parcel)
-        }
-
-        override fun newArray(size: Int): Array<AlimentosVM?> {
-            return arrayOfNulls(size)
-        }
-    }
 
 }

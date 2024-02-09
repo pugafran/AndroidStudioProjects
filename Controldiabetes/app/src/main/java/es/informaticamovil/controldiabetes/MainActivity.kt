@@ -26,9 +26,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-    var totalCarbohidratos = 0.0;
-    var totalIndiceGlucemicoPonderado = 0.0;
-    var totalCarbohidratosPonderados = 0.0;
+
 
 
 
@@ -49,6 +47,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
         bindingo.buttonBarras.setOnClickListener(this);
+        bindingo.buttonCalcular.setOnClickListener(this);
 
 
 
@@ -77,13 +76,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         // Actualizar UI con estos valores...
 
-        totalCarbohidratos += carbohidratos
-        totalIndiceGlucemicoPonderado += indiceGlucemico * carbohidratos
-        totalCarbohidratosPonderados += carbohidratos
+        VM.totalCarbohidratos += carbohidratos
+        VM.totalIndiceGlucemicoPonderado += indiceGlucemico * carbohidratos
+        VM.totalCarbohidratosPonderados += carbohidratos
 
-        val indiceGlucemicoMedio = if (totalCarbohidratos == 0.0) 0.0 else totalIndiceGlucemicoPonderado / totalCarbohidratosPonderados
+        val indiceGlucemicoMedio = if (VM.totalCarbohidratos == 0.0) 0.0 else VM.totalIndiceGlucemicoPonderado / VM.totalCarbohidratosPonderados
 
         // Actualizar UI con los totales y el IG medio...
+
+        bindingo.labelCarbohidratos.text = "Carbohidratos totales: ${VM.totalCarbohidratos}"
+        bindingo.labelIndiceGlucemico.text = "Índice glucémico medio: ${indiceGlucemicoMedio}"
+
     }
 
 
@@ -135,6 +138,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
                 }
+
+            bindingo.buttonCalcular.id -> {
+                val alimento = bindingo.autoCompleteTextViewAlimento.text.toString()
+                val gramos = bindingo.textInputEditTextGramos.text.toString()
+                calcularRaciones(alimento, gramos)
+            }
 
         }
 

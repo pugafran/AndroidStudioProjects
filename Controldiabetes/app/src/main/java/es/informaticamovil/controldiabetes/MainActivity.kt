@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         bindingo.buttonBarras.setOnClickListener(this);
         bindingo.buttonCalcular.setOnClickListener(this);
+        bindingo.buttonLimpiar.setOnClickListener(this);
 
 
 
@@ -76,16 +77,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         // Actualizar UI con estos valores...
 
+
+
+
         VM.totalCarbohidratos += carbohidratos
         VM.totalIndiceGlucemicoPonderado += indiceGlucemico * carbohidratos
         VM.totalCarbohidratosPonderados += carbohidratos
 
         val indiceGlucemicoMedio = if (VM.totalCarbohidratos == 0.0) 0.0 else VM.totalIndiceGlucemicoPonderado / VM.totalCarbohidratosPonderados
 
-        // Actualizar UI con los totales y el IG medio...
-
-        bindingo.labelCarbohidratos.text = "Carbohidratos totales: ${VM.totalCarbohidratos}"
-        bindingo.labelIndiceGlucemico.text = "Índice glucémico medio: ${indiceGlucemicoMedio}"
+        bindingo.labelCarbohidratos.text = "Carbohidratos totales: ${"%.2f".format(VM.totalCarbohidratos)}";
+        bindingo.labelIndiceGlucemico.text = "Índice glucémico medio: ${indiceGlucemicoMedio}";
 
     }
 
@@ -140,9 +142,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
             bindingo.buttonCalcular.id -> {
-                val alimento = bindingo.autoCompleteTextViewAlimento.text.toString()
-                val gramos = bindingo.textInputEditTextGramos.text.toString()
-                calcularRaciones(alimento, gramos)
+                val alimento = bindingo.autoCompleteTextViewAlimento.text.toString();
+                val gramos = bindingo.textInputEditTextGramos.text.toString();
+                calcularRaciones(alimento, gramos);
+            }
+
+            bindingo.buttonLimpiar.id -> {
+                VM.totalCarbohidratos = 0.0;
+                VM.totalIndiceGlucemicoPonderado = 0.0;
+                VM.totalCarbohidratosPonderados = 0.0;
+                bindingo.labelCarbohidratos.text = "Carbohidratos totales: 0.0";
+                bindingo.labelIndiceGlucemico.text = "Índice glucémico medio: 0.0";
+                bindingo.autoCompleteTextViewAlimento.setText("");
+                bindingo.textInputEditTextGramos.setText("");
             }
 
         }

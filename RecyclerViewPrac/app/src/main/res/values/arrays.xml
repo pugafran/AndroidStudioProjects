@@ -8,4 +8,27 @@
         <item>@string/mono</item>
         <item>@string/vaca</item>
     </string-array>
+
+    // Crear un array de asignaturas como recursos como hemos hecho en la aplicación anterior. De esta manera será fácilmente internacionalizable.
+    <string-array name="asignaturas">
+        <item>@string/Programación</item>
+        <item>@string/Entornosdedesarrollo</item>
+        <item>@string/Basededatos</item>
+        <item>@string/Entornosdedesarrollo</item>
+        <item>@string/Formaciónyorientaciónlaboral</item>
+        <item>@string/Formaciónencentrosdetrabajo</item>
+    </string-array>
+
+
+    <string-array name="profesores">
+        <item>@string/Manuel</item>
+        <item>@string/Antonio</item>
+        <item>@string/María</item>
+        <item>@string/Carlos</item>
+        <item>@string/Isabel</item>
+        <item>@string/Francisco</item>
+    </string-array>
+
+
+
 </resources>

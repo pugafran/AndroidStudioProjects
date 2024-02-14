@@ -16,4 +16,18 @@
     <string name="leon">León</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="Programación">Programación</string>
+    <string name="Entornosdedesarrollo">Entornos de desarrollo</string>
+    <string name="Basededatos">Base de datos</string>
+    <string name="Formaciónyorientaciónlaboral">Formación y orientación laboral</string>
+    <string name="Formaciónencentrosdetrabajo">Formación en centros de trabajo</string>
+    <string name="Manuel">Manuel</string>
+    <string name="Antonio">Antonio</string>
+    <string name="María">María</string>
+    <string name="Carlos">Carlos</string>
+    <string name="Isabel">Isabel</string>
+    <string name="Francisco">Francisco</string>
+
+
 </resources>

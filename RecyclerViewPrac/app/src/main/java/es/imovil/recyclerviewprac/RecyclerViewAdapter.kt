@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import es.imovil.recyclerviewprac.databinding.ItemLayoutBinding
 
 class RecyclerViewAdapter(private val courses: List<Course>) :
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
@@ -27,6 +28,9 @@ class RecyclerViewAdapter(private val courses: List<Course>) :
 
         fun bind(course: Course) {
             // Inicializar los dos TextView
+
+            itemBinding.courseText.text = course.name
+            itemBinding.teacherText.text = course.teacher
 
 
 

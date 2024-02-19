@@ -22,19 +22,20 @@ class Course {
         return "Course(name='$name', teacher='$teacher')"
     }
 
+
     companion object {
-        val courses = arrayOf(
-            Course("Matemáticas", "Juan"),
-            Course("Lengua", "María"),
-            Course("Inglés", "John"),
-            Course("Física", "Alberto"),
-            Course("Química", "Ana"),
-            Course("Biología", "Luis"),
-            Course("Historia", "Carlos"),
-            Course("Geografía", "Elena"),
-            Course("Filosofía", "Sofía"),
-            Course("Educación Física", "Pedro")
-        )
+        fun createCourseList(asignaturas: Array<String>, profesores: Array<String>): List<Course> {
+            val courses = mutableListOf<Course>()
+            if (asignaturas.size == profesores.size) {
+                // Añadimos a la lista un objeto Course tomando un
+                // elemento el array de asignaturas y otro de profesores
+                // Sugerencia: usar la función zip
+                for ((asignatura, profesor) in asignaturas.zip(profesores)) {
+                    courses.add(Course(asignatura, profesor))
+                }
+            }
+            return courses.toList()
+        }
     }
 
 

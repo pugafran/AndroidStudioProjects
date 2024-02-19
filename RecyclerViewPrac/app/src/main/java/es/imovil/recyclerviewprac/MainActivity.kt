@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import es.imovil.recyclerviewprac.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +34,18 @@ class MainActivity : AppCompatActivity() {
             R.array.animales,
             android.R.layout.simple_spinner_item
         );
+
+        lateinit var adaptador: RecyclerViewAdapter
+
+
+        val cursos = Course.createCourseList(resources.getStringArray(R.array.asignaturas), resources.getStringArray(R.array.profesores))
+        adaptador = RecyclerViewAdapter(cursos.toMutableList())
+        binding.include.recycler.adapter = adaptador;
+
+        // asignamos un LayoutMAnager al recyclerView
+        binding.include.recycler.layoutManager = LinearLayoutManager(this)
+        // El recycler tiene tamaño fijo, luego activamos esta propiedad
+        binding.include.recycler.setHasFixedSize(true)
 
 
         binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -80,6 +93,7 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
 
 }

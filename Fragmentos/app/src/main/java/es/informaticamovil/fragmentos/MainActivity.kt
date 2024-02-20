@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             bindingo.titulo.text = bundle.getString("bundleKey2")
         }
 
+
+
     }
 
     override fun onClick(v: View?) {

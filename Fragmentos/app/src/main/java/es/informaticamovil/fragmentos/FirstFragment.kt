@@ -46,6 +46,10 @@ class FirstFragment : Fragment(){
             setFragmentResult("requestKey", bundleOf("bundleKey" to "Saludos desde el primer fragmento"))
         }
 
+        childFragmentManager.setFragmentResultListener("requestKey3", this) { _, bundle ->
+            binding.etiqueta.text = bundle.getString("bundleKey3")
+        }
+
         return binding.root
     }
 

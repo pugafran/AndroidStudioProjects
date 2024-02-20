@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import es.informaticamovil.fragmentos.databinding.FragmentSecondBinding
 import es.informaticamovil.fragmentos.databinding.FragmentThirdBinding
 
@@ -66,6 +68,10 @@ class ThirdFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentThirdBinding.bind(view);
+
+        binding.buttonsito3.setOnClickListener {
+            setFragmentResult("requestKey3", bundleOf("bundleKey3" to "Saludos desde el tercer fragmento (Child)"))
+        }
     }
 
     override fun onDestroyView() {

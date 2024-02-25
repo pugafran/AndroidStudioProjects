@@ -6,7 +6,7 @@ import android.view.View
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResultListener
-import es.informaticamovil.fragmentos.databinding.ActivityMainBinding
+import es.informaticamovil.fragmentos.databinding.LayoutVerticalBinding;
 
 
 
@@ -14,15 +14,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     var isChanged: Boolean = false;
 
-    val bindingo: ActivityMainBinding by lazy{
-        ActivityMainBinding.inflate(layoutInflater);
+    val bindingo: LayoutVerticalBinding by lazy{
+        LayoutVerticalBinding.inflate(layoutInflater);
     }
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(bindingo.root);
+        setContentView(R.layout.main);
 
         bindingo.buttonsito.setOnClickListener(this);
 

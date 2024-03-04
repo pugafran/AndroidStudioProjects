@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/hostFragment">
+
+    <fragment
+        android:id="@+id/hostFragment"
+        android:name="es.informaticamovil.basicnavigation.HostFragment"
+        android:label="fragment_host"
+        tools:layout="@layout/fragment_host" >
+        <action
+            android:id="@+id/action_hostFragment_to_firstScreen"
+            app:destination="@id/firstScreen" />
+        <action
+            android:id="@+id/action_hostFragment_to_secondScreen"
+            app:destination="@id/secondScreen" />
+        <action
+            android:id="@+id/action_hostFragment_to_thirdScreen"
+            app:destination="@id/thirdScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/firstScreen"
+        android:name="es.informaticamovil.basicnavigation.FirstScreen"
+        android:label="fragment_first_screen"
+        tools:layout="@layout/fragment_first_screen" />
+    <fragment
+        android:id="@+id/secondScreen"
+        android:name="es.informaticamovil.basicnavigation.SecondScreen"
+        android:label="fragment_second_screen"
+        tools:layout="@layout/fragment_second_screen" >
+        <action
+            android:id="@+id/action_secondScreen_to_thirdScreen"
+            app:destination="@id/thirdScreen"
+            app:enterAnim="@anim/slide_in_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/thirdScreen"
+        android:name="es.informaticamovil.basicnavigation.ThirdScreen"
+        android:label="fragment_third_screen"
+        tools:layout="@layout/fragment_third_screen" >
+        <argument
+            android:name="origen"
+            app:argType="string"
+            android:defaultValue="desconocido" />
+    </fragment>
+</navigation>

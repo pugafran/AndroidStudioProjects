@@ -1,7 +1,6 @@
 package es.imovil.practicapersistencia
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,6 +13,8 @@ import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import androidx.preference.PreferenceManager
 import es.imovil.practicapersistencia.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -24,9 +25,31 @@ class MainActivity : AppCompatActivity() {
     private val bookViewModel: BookViewModel by viewModels()
 
 
+
+
+
+
+    override fun onStart() {
+        super.onStart()
+        bookViewModel.restoreBookList()
+        bookViewModel.setArchivename("epicardo")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        bookViewModel.saveBookList()
+    }
+
+    fun onOptionsItemsSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.settings -> NavigationUI.onNavDestinationSelected(item, navController)
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -71,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.settings -> true
             else -> super.onOptionsItemSelected(item)
         }
     }

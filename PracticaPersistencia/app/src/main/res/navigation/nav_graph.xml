@@ -25,4 +25,8 @@
             android:id="@+id/action_Entry_to_List"
             app:destination="@id/ListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settings"
+        android:name="es.imovil.practicapersistencia.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

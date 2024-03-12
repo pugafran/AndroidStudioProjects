@@ -10,4 +10,21 @@
             android:singleLine="true"
             android:title="Nombre del fichero" />
     </PreferenceCategory>
+    <ListPreference
+        android:defaultValue="internal"
+        android:entries="@array/options"
+        android:entryValues="@array/values"
+        android:key="storage_area"
+        android:title="Localización del archivo"
+        app:useSimpleSummaryProvider="true"/>
+
+    <PreferenceCategory android:title="Presentación">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="isbn"
+            android:summaryOff="ocultar"
+            android:summaryOn="mostrar"
+            android:title="Mostrar ISBN" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

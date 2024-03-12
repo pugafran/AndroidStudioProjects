@@ -1,7 +1,9 @@
 package es.imovil.practicapersistencia
 
 import android.app.Application
+import android.content.SharedPreferences
 import android.provider.Telephony.Mms.Part.FILENAME
+import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
@@ -10,6 +12,7 @@ import java.io.File
 
 class BookViewModel(private val application: Application) : AndroidViewModel(application) {
     var bookList = mutableListOf<Book>()
+    var filename: String = "epicardo"
 
     fun getListSize(): Int {
         return bookList.size
@@ -24,6 +27,24 @@ class BookViewModel(private val application: Application) : AndroidViewModel(app
             bookList.add(book)
         }
 
+    }
+
+    fun bind() {
+        val sp = PreferenceManager.getDefaultSharedPreferences(application)
+        val isbnPref = sp.getBoolean("isbn", true)
+        when (isbnPref) {
+            true -> {
+
+                isbn.text = book.isbn ?: " "
+                isbn.visibility = View.VISIBLE
+                // Completar
+
+            }
+        }
+    }
+
+    fun getDefaultSharedPreferences(): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(application)
     }
 
     fun setArchivename(archivename: String) {
@@ -49,6 +70,19 @@ class BookViewModel(private val application: Application) : AndroidViewModel(app
         val file = File(application.filesDir, FILENAME)
         val contenido = Gson().toJson(bookList)
         file.writeText(contenido)
+    }
+
+    fun changeLocalization(newLocalization : String){
+
+        /*
+        Implementa en el ViewModel el método changeLocalization(String newLocalization) que permita almacenar la colección de libros bien en almacenamiento externo o en almacenamiento interno. Ten en cuenta que elegir entre almacenamiento externo o interno también obliga a modificar saveBookList() y restoreBookList().
+         */
+
+        val sp = PreferenceManager.getDefaultSharedPreferences(application)
+        val editor = sp.edit()
+        editor.putString("localization", newLocalization)
+        editor.apply()
+
     }
 
 

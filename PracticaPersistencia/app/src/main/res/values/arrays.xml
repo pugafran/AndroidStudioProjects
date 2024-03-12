@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="options">"Almacenamiento interno", "Almacenamiento externo"</string-array>
+    <string-array name="values">"internal", "external"</string-array>
+</resources>

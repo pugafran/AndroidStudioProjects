@@ -1,5 +1,6 @@
 package es.imovil.practicapersistencia
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -17,7 +18,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.preference.PreferenceManager
 import es.imovil.practicapersistencia.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener{
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         val sp = PreferenceManager.getDefaultSharedPreferences(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
         setSupportActionBar(binding.toolbar)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
@@ -103,5 +104,23 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        when (key) {
+            "archivename" -> {
+                val newarchive = sharedPreferences?.getString(key, "books_repository").toString()
+                bookViewModel.filename = newarchive;
+            }
+
+            "storage_area" -> {
+                val storageArea = sharedPreferences?.getString(key, "internal").toString()
+                bookViewModel.changeLocalization(storageArea)
+            }
+
+
+
+        }
+
     }
 }

@@ -8,12 +8,15 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
+import es.informaticamovil.controldiabetes.data.RetrofitService
 import es.informaticamovil.controldiabetes.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -26,7 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-
+    val service = RetrofitService.RetrofitServiceFactory.makeRetrofitService()
 
 
 
@@ -49,6 +52,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         bindingo.buttonBarras.setOnClickListener(this);
         bindingo.buttonCalcular.setOnClickListener(this);
         bindingo.buttonLimpiar.setOnClickListener(this);
+
+
+
+
 
 
 
@@ -109,7 +116,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                         // Task completed successfully
                         val rawValue: String? = barcode.rawValue;
                         bindingo.labelPrueba.text = rawValue;
-                        obtenerDatosCarbohidratos(rawValue ?: "")
+
+                        lifecycleScope.launch{
+                            if (rawValue != null) {
+                                val value = service.getProducto(rawValue)
+
+                                val nombre = value.product.product_name
+                                val carbohydrates_100g = value.product.nutriments.carbohydrates_100g
+                                bindingo.labelPrueba.text = "Nombre: $nombre, Carbohidratos cada 100g: $carbohydrates_100g";
+                                
+                            }
+                        }
+
                     }
                     .addOnCanceledListener {
 
@@ -161,7 +179,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
         }
-
+/*
     fun obtenerDatosCarbohidratos(codigoBarras: String) {
         val thread = Thread {
             try {
@@ -197,4 +215,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
         thread.start()
     }
+
+
+ */
+
 }

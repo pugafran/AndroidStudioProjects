@@ -1,27 +1,17 @@
 package es.informaticamovil.controldiabetes
 
-import android.R
 import android.app.AlertDialog
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions
 import com.google.mlkit.vision.codescanner.GmsBarcodeScanning
-import es.informaticamovil.controldiabetes.data.RetrofitService
 import es.informaticamovil.controldiabetes.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
-import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -29,7 +19,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-    val service = RetrofitService.RetrofitServiceFactory.makeRetrofitService()
+    private val service by lazy { RetrofitClientInstance.getService() }
 
 
 
@@ -44,7 +34,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(bindingo.root);
         val nombresAlimentos = VM.alimentos.map { it.nombre }
-        val adapter = ArrayAdapter(this, R.layout.simple_dropdown_item_1line, nombresAlimentos);
+        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, nombresAlimentos)
         bindingo.autoCompleteTextViewAlimento.setAdapter(adapter);
         bindingo.autoCompleteTextViewAlimento.threshold = 1; // Empieza a mostrar sugerencias después de 1 carácter.
 
@@ -100,47 +90,42 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
     override fun onClick(v: View?) {
-        when(v?.id) {
-
+        when (v?.id) {
             bindingo.buttonBarras.id -> {
-
-                val options = GmsBarcodeScannerOptions.Builder()
+                // Asumiendo que ya configuraste las opciones de tu escáner.
+                val scanner = GmsBarcodeScanning.getClient(this, GmsBarcodeScannerOptions.Builder()
                     .setBarcodeFormats(Barcode.FORMAT_EAN_13)
                     .enableAutoZoom()
-                    .build();
-
-                val scanner = GmsBarcodeScanning.getClient(this, options);
+                    .build())
 
                 scanner.startScan()
                     .addOnSuccessListener { barcode ->
-                        // Task completed successfully
-                        val rawValue: String? = barcode.rawValue;
-                        bindingo.labelPrueba.text = rawValue;
-
-                        lifecycleScope.launch{
-                            if (rawValue != null) {
-                                val value = service.getProducto(rawValue)
-
-                                val nombre = value.product.product_name
-                                val carbohydrates_100g = value.product.nutriments.carbohydrates_100g
-                                bindingo.labelPrueba.text = "Nombre: $nombre, Carbohidratos cada 100g: $carbohydrates_100g";
-                                
+                        // Cuando se escanea correctamente, inicia una coroutina para hacer la llamada de red.
+                        lifecycleScope.launch {
+                            try {
+                                val rawValue = barcode.rawValue
+                                // Asegúrate de que rawValue no sea null antes de hacer la llamada.
+                                if (rawValue != null) {
+                                    val productResponse = service.getProducto(rawValue)
+                                    // Usar los datos obtenidos para actualizar la UI
+                                    val nombre = productResponse.product_name
+                                    val carbohydrates_100g = productResponse.nutriments.carbohydrates_100g
+                                    bindingo.labelPrueba.text = "Nombre: $nombre, Carbohidratos cada 100g: $carbohydrates_100g"
+                                } else {
+                                    showErrorDialog("No se detectó ningún código de barras.")
+                                }
+                            } catch (e: Exception) {
+                                // En caso de error en la llamada de red, muestra un diálogo de error.
+                                showErrorDialog("Error al obtener los datos del producto." + e.message)
                             }
                         }
-
-                    }
-                    .addOnCanceledListener {
-
-
-
-                        // Task canceled
                     }
                     .addOnFailureListener { e ->
                         // Task failed with an exception
 
                         val builder = AlertDialog.Builder(this)
                         builder.setTitle("Título del Popup")
-                        builder.setMessage("Este es un mensaje de ejemplo para el popup.")
+                        builder.setMessage(e.message)
 
                         // Botón de acción positiva, por ejemplo, "Aceptar"
                         builder.setPositiveButton("Aceptar") { dialog, which ->
@@ -218,5 +203,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
  */
+private fun showErrorDialog(message: String) {
+    AlertDialog.Builder(this)
+        .setTitle("Error")
+        .setMessage(message)
+        .setPositiveButton("Aceptar") { dialog, which -> dialog.dismiss() }
+        .show()
+}
+
 
 }

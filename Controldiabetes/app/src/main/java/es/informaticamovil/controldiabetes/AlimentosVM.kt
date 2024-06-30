@@ -1,5 +1,7 @@
 package es.informaticamovil.controldiabetes
 
+import Product
+import android.media.Image
 import android.os.Parcel
 import android.os.Parcelable
 import androidx.lifecycle.ViewModel
@@ -13,9 +15,15 @@ class AlimentosVM() : ViewModel(){
         val indiceGlucemico: Int
     )
 
+    var image: String = ""
     var totalCarbohidratos = 0.0;
     var totalIndiceGlucemicoPonderado = 0.0;
     var totalCarbohidratosPonderados = 0.0;
+    var indiceGlucemico = 0;
+    var product = Product();
+
+
+
 
     val jsonStr = """{
     "Altramuz": {"carbohidratos": 20, "indiceGlucemico": 15},
@@ -212,6 +220,8 @@ class AlimentosVM() : ViewModel(){
             )
         }
     }
+
+
 
 
 

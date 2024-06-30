@@ -1,0 +1,13 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreferenceCompat
+        android:key="use_chatgpt"
+        android:title="Utilizar ChatGPT"
+        android:summary="Activar para usar ChatGPT en la aplicación" />
+
+    <SwitchPreferenceCompat
+        android:key="save_history"
+        android:title="Guardar historial"
+        android:summary="Activar para guardar el historial de chat" />
+
+</PreferenceScreen>

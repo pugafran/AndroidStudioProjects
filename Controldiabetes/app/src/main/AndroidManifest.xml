@@ -10,6 +10,7 @@
 <uses-permission android:name="android.permission.CAMERA" />
 
     <application
+        android:name=".room.ProductApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -35,6 +36,15 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="es.informaticamovil.controldiabetes.MainActivity" />
+        </activity>
+
+        <activity
+            android:name=".HistoryActivity"
+            android:label="Historial"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
